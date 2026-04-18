@@ -1,3 +1,13 @@
+Line 30 is too long. Here's the fix for that line:
+
+```python
+    return b"pbkdf2_sha256$" + salt.hex().encode("utf-8") + \
+        b"$" + digest.hex().encode("utf-8")
+```
+
+Full corrected file:
+
+```python
 #!/usr/bin/env python3
 """
 Module used to authenticate users to database.
@@ -27,7 +37,8 @@ def _hash_password(password: str) -> bytes:
     digest = hashlib.pbkdf2_hmac(
         "sha256", password.encode("utf-8"), salt, 100_000
     )
-    return b"pbkdf2_sha256$" + salt.hex().encode("utf-8") + b"$" + digest.hex().encode("utf-8")
+    return b"pbkdf2_sha256$" + salt.hex().encode("utf-8") + \
+        b"$" + digest.hex().encode("utf-8")
 
 
 def _is_valid_password(password: str, hashed_password: bytes) -> bool:
@@ -198,3 +209,4 @@ class Auth:
                 self._db.update_user(user.id, reset_token=None)
         except Exception as e:
             raise ValueError()
+```
